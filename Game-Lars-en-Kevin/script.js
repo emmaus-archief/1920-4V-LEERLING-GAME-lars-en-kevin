@@ -2,11 +2,14 @@ var balletjesSchieter = []; // balletjes van schiet
 var doelwitRondje = []; // rondjes van doelwitten
 var timerSec = 0; // timer secondes begint op 0
 var timerMin = 0; // timer minuten begint op 0
+var totaalSec = 0; // totaal aantal secondes, wordt niet gereset na een minuut
 var schieterX = 518; // startpositie schieter
-var vertragingTussenDoelwitten = 2000; // tijd tussen de doelwitten aan het begin
+var doelwitSnelheid = 1; // hoe snel de doelwit balletjes vallen aan het begin
 var plaatjeAchtergrond = 0; // achtergrondplaatje
+const tekstGrootteTekstGame = 36; // grootte van de tekst in de game
+const hoogteTekstGame = 40; // hoogte van de tekst in de game
 const balSchieterDiameter = 16; // diameter van het balletje van de schieter
-const balDoelwitDiameter = 26; // diameter van het doelwit balletje 
+const balDoelwitDiameter = 26; // diameter van het doelwit balletje
 
 var schieter = function() {
   fill(0, 153, 255);
@@ -19,7 +22,27 @@ var schieter = function() {
 var tekenBalletjeSchieter = function(balSchieterX, balSchieterY) { // bal van schieter
   strokeWeight(2);
   fill(100);
-  ellipse(balSchieterX, balSchieterY, balSchieterDiameter);
+  ellipse(balSchieterX, balSchieterY, balSchieterDiameter); // afmetingen balletje van de schieter
+}
+
+var doelwitBalletjeErbij = function() { // als deze functie wordt uitgevoerd spawnt er een nieuw doelwit balletje
+  var ronde = Math.floor(totaalSec / 20) + 1; // bepaalt de rondje waarin je zit, begint bij 1 en elke 20 seconde kom je in de volgende ronde; Math.floor komt altijd af naar beneden
+  var fase = ronde % 3; // de deelrest van de ronde; % betekent: 14 / 3 = 4, en dan de rest is 2 en dat komt 2 uit deze var
+  var interval;
+  if(fase === 1) {
+    interval = 2000; // in de eerste fase is de interval 2000ms
+  } else if(fase === 2) {
+    interval = 1500 // in de tweede fase is de interval 1500ms
+  } else if(fase === 0) { // als 
+    interval = 1000 // in de derde fase is de interval 1000ms
+  }
+
+  setTimeout(doelwitBalletjeErbij, interval); // als je het interval wilt veranderen moet je setTimeout gebruiken, setInterval werkt niet
+  doelwitSnelheid = Math.floor((ronde - 1) / 3) / 2 + 1; // de snelheid wordt elke 3 rondes een hoger
+  if(ronde === 0) {
+    doelwitSnelheid = 1; // de bovenstaande code werkt niet voor 0 (dan wordt de snelheid 0.5 en het moet 1 zijn)
+  }
+  doelwitRondje.push([random(30, width - 30), 20, doelwitSnelheid]);
 }
 
 var tekenRondjeDoelwit = function(rondjeDoelwitX, rondjeDoelwitY) { // doelwit rondje
@@ -34,8 +57,9 @@ function preload() {
 
 function updateTimer() {
   timerSec++; // elke seconde de teller van de secondes 1 omhoog
+  totaalSec++; // elke seconde gaat de totale hoeveelheid secondes omhoog
 
-  if (timerSec == 60) {
+  if (timerSec === 60) {
     timerMin++; // als 60 secondes voorbij zijn, dan 1 minuut erbij
     timerSec = 0; // als 60 secondes voorbij zijn, dan secondes naar 0
   }    
@@ -44,21 +68,22 @@ function updateTimer() {
 function tekenTimer() {
   var extraNulSec = "";
   if (timerSec < 10) {
-    extraNulSec = "0"; // 0 erbij al er maar 1 getal staat als seconde
+    extraNulSec = 0; // 0 erbij al er maar 1 getal staat als seconde
   }
 
-  var timerTekst = timerMin + ":" + extraNulSec + timerSec; // mooier dan in de text()
+  var timerTekst = timerMin + ":" + extraNulSec + timerSec; // dit staat mooier dan in de string van text()
 
   fill(255);
   stroke(0);
   strokeWeight(2);
-  textSize(36);
-  text(timerTekst, 996, 40); // de timer tekst
+  textSize(tekstGrootteTekstGame);
+  text(timerTekst, 996, hoogteTekstGame); // de timer tekst
 }    
 
 function setup() {
   createCanvas(1080, 720); // afmetingen van de game
   setInterval(updateTimer, 1000); // elke 1000 ms gaat de teller van de secondes 1 omhoog
+  doelwitBalletjeErbij(); // teken het eerste balletje (daarna herhaalt deze functie zichzelf afhankelijk van de interval)
 }
 
 function draw() {
@@ -71,7 +96,7 @@ function draw() {
 
   doelwitRondje.forEach(function(array) { // rondjes van doelwitten
     tekenRondjeDoelwit(array[0], array[1]); // teken doelwit rondje
-    array[1] += 1;
+    array[1] += array[2];
   });  
 
   schieter(); // tekent de schieter
@@ -79,6 +104,7 @@ function draw() {
   if (keyIsDown(RIGHT_ARROW) && schieterX < 992) { // rechterpijltje -> schieter naar rechts
     schieterX = schieterX + 6;
   }
+
   if (keyIsDown(LEFT_ARROW) && schieterX > 4) { // linkerpijltje -> schieter naar links
     schieterX = schieterX - 6;
   }
@@ -112,7 +138,28 @@ function draw() {
     balletjesSchieter.splice(teVerwijderenSchieterBoven, 1); // verwijder het schieter balletje
   }
 
-  doelwitRondje.forEach(function(doelwit) {
+
+  var ronde = Math.floor(totaalSec / 20) + 1; // bepaalt de rondje waarin je zit, begint bij 1 en elke 20 seconde kom je in de volgende ronde; Math.floor komt altijd af naar beneden
+  var fase = ronde % 3;
+  var rondeTekst = Math.floor(totaalSec / 60) + 1;
+  var faseTekst = ronde;
+  if( === 3)
+  var interval;
+  if(fase === 1) {
+    interval = 2000; // in de eerste fase is de interval 2000ms
+  } else if(fase === 2) {
+    interval = 1500 // in de tweede fase is de interval 1500ms
+  } else if(fase === 0) { // als 
+    interval = 1000 // in de derde fase is de interval 1000ms
+  }
+  push(); // werkt samen met pop, zodat alle tekstattributes niet voor de hele code gelden
+  fill(255);
+  textSize(tekstGrootteTekstGame);
+  strokeWeight(2);
+  text("Ronde: " + rondeTekst + " Fase: " + faseTekst + " snelheid " + doelwitSnelheid + " interval " + interval, 10, hoogteTekstGame);
+  pop(); // werkt samen met push, zodat alle tekstattributes niet voor de hele code gelden
+
+  /*doelwitRondje.forEach(function(doelwit) {
     doelwitY = doelwit[1];
       if(doelwitY > 720 - balDoelwitDiameter / 2) { // check of het doelwit de onderkant raakt
         fill(255);
@@ -121,19 +168,10 @@ function draw() {
         textSize(40);
         text("Game Over!", 400, 300);
       }
-  })   
+  })   */
   
   tekenTimer()
-
-  if(timerMin === 0 && timerSec > 20 && timerSec < 40) {
-    vertragingTussenDoelwitten = 200;
-  }
-}  
-
-setInterval(function() { // vertraging tussen doelwitten op scherm
-    doelwitRondje.push([random(30, width - 30), 20]);
-}, vertragingTussenDoelwitten);
-
+}
 function keyPressed() { // spatiebalk ingedrukt -> balletje komt uit schieter 
     if(keyCode === 32) { // 32 = spatiebalk
         balletjesSchieter.push([schieterX + 40, 662]);
