@@ -26,20 +26,20 @@ var tekenBalletjeSchieter = function(balSchieterX, balSchieterY) { // bal van sc
 }
 
 var doelwitBalletjeErbij = function() { // als deze functie wordt uitgevoerd spawnt er een nieuw doelwit balletje
-  var ronde = Math.floor(totaalSec / 20) + 1; // bepaalt de rondje waarin je zit, begint bij 1 en elke 20 seconde kom je in de volgende ronde; Math.floor komt altijd af naar beneden
-  var fase = ronde % 3; // de deelrest van de ronde; % betekent: 14 / 3 = 4, en dan de rest is 2 en dat komt 2 uit deze var
+  var fase = Math.floor(totaalSec / 20) + 1; // bepaalt de fase waarin je zit, begint bij 1 en elke 20 seconde kom je in de volgende ronde; Math.floor komt altijd af naar beneden
+  var faseNummer = fase % 3; // de deelrest van de fase; % betekent: 14 / 3 = 4, en dan de rest is 2 en dat komt 2 uit deze var
   var interval;
-  if(fase === 1) {
+  if(faseNummer === 1) {
     interval = 2000; // in de eerste fase is de interval 2000ms
-  } else if(fase === 2) {
-    interval = 1500 // in de tweede fase is de interval 1500ms
-  } else if(fase === 0) { // als 
-    interval = 1000 // in de derde fase is de interval 1000ms
+  } else if(faseNummer === 2) {
+    interval = 1500; // in de tweede fase is de interval 1500ms
+  } else if(faseNummer === 0) {
+    interval = 1000; // in de derde fase is de interval 1000ms
   }
 
   setTimeout(doelwitBalletjeErbij, interval); // als je het interval wilt veranderen moet je setTimeout gebruiken, setInterval werkt niet
-  doelwitSnelheid = Math.floor((ronde - 1) / 3) / 2 + 1; // de snelheid wordt elke 3 rondes een hoger
-  if(ronde === 0) {
+  doelwitSnelheid = Math.floor((fase - 1) / 3) / 2 + 1; // de snelheid wordt elke 3 fases 0.5 hoger
+  if(fase === 0) {
     doelwitSnelheid = 1; // de bovenstaande code werkt niet voor 0 (dan wordt de snelheid 0.5 en het moet 1 zijn)
   }
   doelwitRondje.push([random(30, width - 30), 20, doelwitSnelheid]);
@@ -57,7 +57,7 @@ function preload() {
 
 function updateTimer() {
   timerSec++; // elke seconde de teller van de secondes 1 omhoog
-  totaalSec++; // elke seconde gaat de totale hoeveelheid secondes omhoog
+  totaalSec++; // elke seconde gaat de totale hoeveelheid secondes met 1 omhoog
 
   if (timerSec === 60) {
     timerMin++; // als 60 secondes voorbij zijn, dan 1 minuut erbij
@@ -138,28 +138,29 @@ function draw() {
     balletjesSchieter.splice(teVerwijderenSchieterBoven, 1); // verwijder het schieter balletje
   }
 
+  var fase = Math.floor(totaalSec / 20) + 1; // bepaalt de fase waarin je zit, begint bij 1 en elke 20 seconde kom je in de volgende ronde; Math.floor komt altijd af naar beneden
+  var faseNummer = fase % 3; // de deelrest van de fase; % betekent: 14 / 3 = 4, en dan de rest is 2 en dat komt 2 uit deze var
 
-  var ronde = Math.floor(totaalSec / 20) + 1; // bepaalt de rondje waarin je zit, begint bij 1 en elke 20 seconde kom je in de volgende ronde; Math.floor komt altijd af naar beneden
-  var fase = ronde % 3;
-  var rondeTekst = Math.floor(totaalSec / 60) + 1;
-  var faseTekst = ronde;
-  if( === 3)
-  var interval;
-  if(fase === 1) {
-    interval = 2000; // in de eerste fase is de interval 2000ms
-  } else if(fase === 2) {
-    interval = 1500 // in de tweede fase is de interval 1500ms
-  } else if(fase === 0) { // als 
-    interval = 1000 // in de derde fase is de interval 1000ms
+  rondeTekst = Math.floor(totaalSec / 60) + 1;
+
+  if(faseNummer === 1) {
+    faseTekst = 1;
   }
+  if(faseNummer === 2) {
+    faseTekst = 2;  
+  }
+  if(faseNummer === 0) {
+    faseTekst = 3;
+  }
+
   push(); // werkt samen met pop, zodat alle tekstattributes niet voor de hele code gelden
   fill(255);
   textSize(tekstGrootteTekstGame);
   strokeWeight(2);
-  text("Ronde: " + rondeTekst + " Fase: " + faseTekst + " snelheid " + doelwitSnelheid + " interval " + interval, 10, hoogteTekstGame);
+  text("Ronde: " + rondeTekst + " Fase: " + faseTekst, 10, hoogteTekstGame);
   pop(); // werkt samen met push, zodat alle tekstattributes niet voor de hele code gelden
 
-  /*doelwitRondje.forEach(function(doelwit) {
+  doelwitRondje.forEach(function(doelwit) {
     doelwitY = doelwit[1];
       if(doelwitY > 720 - balDoelwitDiameter / 2) { // check of het doelwit de onderkant raakt
         fill(255);
@@ -168,7 +169,7 @@ function draw() {
         textSize(40);
         text("Game Over!", 400, 300);
       }
-  })   */
+  })
   
   tekenTimer()
 }
