@@ -1,3 +1,9 @@
+const BeginScherm = 1;
+const Uitleg = 2;
+const Game = 3;
+const EindScherm = 4;
+var SpelStatus = Spelen;
+
 var balletjesSchieter = []; // balletjes van schiet
 var doelwitRondje = []; // rondjes van doelwitten
 var timerSec = 0; // timer secondes begint op 0
@@ -65,19 +71,23 @@ function updateTimer() {
   }    
 }
 
-function tekenTimer() {
+function tekenTimer() {  
+  var extraNulMin = "";
   var extraNulSec = "";
+  if (timerMin < 10) {
+    extraNulMin = 0; // 0 erbij al er maar 1 getal staat als minuut
+  }  
   if (timerSec < 10) {
     extraNulSec = 0; // 0 erbij al er maar 1 getal staat als seconde
   }
 
-  var timerTekst = timerMin + ":" + extraNulSec + timerSec; // dit staat mooier dan in de string van text()
+  var timerTekst = extraNulMin + timerMin + ":" + extraNulSec + timerSec; // dit staat mooier dan in de string van text()
 
   fill(255);
   stroke(0);
   strokeWeight(2);
   textSize(tekstGrootteTekstGame);
-  text(timerTekst, 996, hoogteTekstGame); // de timer tekst
+  text(timerTekst, 988, hoogteTekstGame); // de timer tekst
 }    
 
 function setup() {
@@ -87,6 +97,7 @@ function setup() {
 }
 
 function draw() {
+    
   image(plaatjeAchtergrond, 0, 0); // teken achtergrondplaatje
   
   balletjesSchieter.forEach(function(array) { // balletjes schieter
@@ -157,7 +168,7 @@ function draw() {
   fill(255);
   textSize(tekstGrootteTekstGame);
   strokeWeight(2);
-  text("Ronde: " + rondeTekst + " Fase: " + faseTekst, 10, hoogteTekstGame);
+  text("Ronde: " + rondeTekst + " Fase: " + faseTekst, 14, hoogteTekstGame);
   pop(); // werkt samen met push, zodat alle tekstattributes niet voor de hele code gelden
 
   doelwitRondje.forEach(function(doelwit) {
