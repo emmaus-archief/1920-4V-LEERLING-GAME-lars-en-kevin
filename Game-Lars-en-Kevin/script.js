@@ -10,7 +10,7 @@ const posXrechthoekBeginscherm = 362;
 const posYrechthoekBeginscherm = 246;
 const posXbedieningBeginscherm = 382;
 const posYbedieningBeginscherm = 448;
-const posXtekstZijkantBeginscherm = 60;
+const posXtekstZijkantBeginscherm = 60; // X-positie
 const posYtekstZijkantBeginscherm = 300;
 
 // array's van kogeltjes en doelwitten
@@ -32,7 +32,7 @@ var schieterY = 672; // Y-positie schieter
 var fase = 1;
 var faseNummer = 0;
 var faseTekst = "";
-var rondeTekst = Math.floor(totaalSec / 60) + 1;
+var rondeTekst = "";
 
 // doelwitsnelheid begin
 var doelwitSnelheid = 1; // hoe snel de doelwit balletjes vallen aan het begin
@@ -198,7 +198,7 @@ var doelwittenEnKogelsVerdwijnen = function() { // variabale van het verdwijnen 
   }
 }
 
-var tekenFaseTekst = function() {
+var tekenRondeFaseTekst = function() {
 
   if(faseNummer === 1) {
     faseTekst = "1";
@@ -207,6 +207,8 @@ var tekenFaseTekst = function() {
   } else if(faseNummer === 0) {
     faseTekst = "3";
   }
+
+  rondeTekst = Math.floor(totaalSec / 60) + 1;
 
   push(); // werkt samen met pop, zodat alle tekstattributes niet voor de hele code gelden
   fill(255);
@@ -230,10 +232,15 @@ var updateTimer = function() {
 
 var tekenTimer = function() {
   timerMinStr = timerMin + "";
-  if(timerMinStr.length < 2) timerMinStr = "0" + timerMinStr;
-  timerSecStr = timerSec + "";
-  if(timerSecStr.length < 2) timerSecStr = "0" + timerSecStr;
+  if(timerMinStr.length < 2) {
+    timerMinStr = "0" + timerMinStr;
+  }
 
+  timerSecStr = timerSec + "";
+  if(timerSecStr.length < 2) {
+    timerSecStr = "0" + timerSecStr;
+  }
+    
   var timerTekst = timerMinStr + ":" + timerSecStr; // dit staat mooier dan in de string van text()
 
   fill(255);
@@ -258,6 +265,7 @@ var resetGame = function() {
   timerSec = 0; // timer secondes begint weer op 0
   timerMin = 0; // timer minuten begint weer op 0
   totaalSec = 0; // timer totaal begint weer op 0
+  schieterX = 518;
   balletjesSchieter = [];
   doelwitRondje = [];
   fase = 1;
@@ -277,6 +285,9 @@ var eindSchermTitel = function() {
 }
 
 var scores = function() {
+
+  rondeTekst = Math.floor(totaalSec / 60) + 1;  
+
   fill(255);
   textFont('Helvetica');
   textSize(24);
@@ -391,7 +402,7 @@ function draw() {
 
       tekenTimer(); // tekent de timer
 
-      tekenFaseTekst();
+      tekenRondeFaseTekst();
 
       if(checkGameOver() === true) {
         spelStatus = GAMEOVER; // als het balletje bij de onderkant van het scherm komt is "Game Over = true"; dan is de spelstatus GAMEOVER
