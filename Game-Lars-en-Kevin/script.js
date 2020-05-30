@@ -8,10 +8,14 @@ var spelStatus = BEGINSCHERM;
 // constanten van het beginscherm
 const posXrechthoekBeginscherm = 362; // X-positie van de rechthoek met de tekst "Game Spelen"
 const posYrechthoekBeginscherm = 246; // Y-positie van de rechthoek met de tekst "Game Spelen"
+const posXtekstZijkantBeginscherm = 36; // X-positie van de tekst aan de zijkant van het beginscherm
+const posYtekstZijkantBeginscherm = 240; // Y-positie van de tekst aan de zijkant van het beginscherm
+const posXknopUitlegBeginscherm = 780; // X-positie van de knop van de uitleg op het beginscherm
+const posYknopUitlegBeginscherm = 262; // Y-positie van de knop van de uitleg op het beginscherm
+const breedteKnopUitlegBeginscherm = 100; // breedte van de knop van de uitleg op het beginscherm
+const hoogteKnopUitlegBeginscherm = 48; // hoogte van de knop van de uitleg op het beginscherm
 const posXbedieningBeginscherm = 382; // X-positie van de bediening op het beginscherm
 const posYbedieningBeginscherm = 448; // Y-positie van de bediening op het beginscherm
-const posXtekstZijkantBeginscherm = 60; // X-positie van de tekst aan de zijkant van het beginscherm
-const posYtekstZijkantBeginscherm = 300; // Y-positie van de tekst aan de zijkant van het beginscherm
 
 // array's van kogeltjes en doelwitten
 var balletjesSchieter = []; // maakt een array aan voor de balletjes van de schieter
@@ -70,9 +74,8 @@ var titelKnopEnNamenBeginScherm = function() { // variabele voor het tekenen van
     fill(180, 180, 200);
     strokeWeight(6);
   }
-
   stroke(0);
-  rect(posXrechthoekBeginscherm, posYrechthoekBeginscherm, 344, 74); // rechthoek beginscherm
+  rect(posXrechthoekBeginscherm, posYrechthoekBeginscherm, 344, 74); // rechthoek "Game Spelen "beginscherm
 
   textFont('Helvetica'); // lettertype
   textSize(30);
@@ -97,7 +100,33 @@ var tekstenZijkantenBeginscherm = function() {
     fill(6, 120, 194);
     noStroke();
     textSize(20);
-    text("Zorg dat de balletjes de grond niet\nraken door ze uit de lucht te schieten!\nHet wordt steeds moeilijker, door meer en snellere balletjes!", posXtekstZijkantBeginscherm, posYtekstZijkantBeginscherm);
+    stroke(255);
+    strokeWeight(2);
+    text("Zorg dat de balletjes de grond\nniet raken door ze uit\nde lucht te schieten!\nHet wordt steeds moeilijker\ndoor meer en snellere balletjes!", posXtekstZijkantBeginscherm, posYtekstZijkantBeginscherm);
+}
+
+var knopUitlegBeginscherm = function() {
+  if (mouseX > posXknopUitlegBeginscherm && mouseX < posXknopUitlegBeginscherm + breedteKnopUitlegBeginscherm && mouseY > posYknopUitlegBeginscherm && mouseY < posYknopUitlegBeginscherm + hoogteKnopUitlegBeginscherm) {
+    fill(114, 212, 252);
+    strokeWeight(8);
+  } else {
+    fill(180, 180, 200);
+    strokeWeight(6);
+  }
+  stroke(0);
+  rect(posXknopUitlegBeginscherm, posYknopUitlegBeginscherm, breedteKnopUitlegBeginscherm, hoogteKnopUitlegBeginscherm); // rechthoek "Uitleg" beginscherm
+
+  textFont('Helvetica'); // lettertype
+  textSize(22);
+  if (mouseX > posXknopUitlegBeginscherm && mouseX < posXknopUitlegBeginscherm + breedteKnopUitlegBeginscherm && mouseY > posYknopUitlegBeginscherm && mouseY < posYknopUitlegBeginscherm + hoogteKnopUitlegBeginscherm) {
+    fill(255);
+    stroke(0);
+    strokeWeight(4);
+  } else {
+    noStroke();
+    fill(100);
+  }
+  text("Uitleg", posXknopUitlegBeginscherm + 22, posYknopUitlegBeginscherm + 32); // tekst "Uitleg"
 }
 
 var bedieningBeginscherm = function() {
@@ -118,7 +147,7 @@ var bedieningBeginscherm = function() {
 // VARIABELES MET FUNCTIES VAN DE UITLEG
 
 var tekenUitleg = function() {
-    image(plaatjeAchtergrondBeginEindUitleg, 0, 0);
+  image(plaatjeAchtergrondBeginUitlegEind, 0, 0);
 }
 
 // VARIABELES MET FUNCTIES VAN DE GAME
@@ -346,30 +375,33 @@ var knopEindschermRechts = function() { // variabele voor het tekenen van de rec
 
 // BEGIN VAN DE FUNCTIES
 
-
-////var plaatjeAchtergrondGame; // maakt een varia
-//var plaatjeAchtergrondBeginEindUitleg; // 
+var pijlLinks; // maakte een variabele aan voor het plaatje van de pijl naar links
+var pijlRechts; // maakte een variabele aan voor het plaatje van de pijl naar rechts
+var spatiebalk; // maakte een variabele aan voor het plaatje van de spatiebalk
+var plaatjeAchtergrondGame; // maakte een variabele aan voor het achtergrondplaatje van de game
+var plaatjeAchtergrondBeginUitlegEind; // maakte een variabele aan voor het achtergrondplaatje van het beginscherm, de uitleg en het eindscherm
 function preload() { // functie om de plaatjes te laden
   pijlLinks = loadImage('Afbeeldingen/pijlLinks.jpg'); // plaatje linker pijltje laden
   pijlRechts = loadImage('Afbeeldingen/pijlRechts.jpg'); // plaatje rechter pijltje laden
   spatiebalk = loadImage('Afbeeldingen/spatiebalk.jpg'); // plaatje spatiebalk laden
   plaatjeAchtergrondGame = loadImage('Afbeeldingen/plaatjeAchtergrondWereld.jpg'); // achtergrondplaatje laden
-  plaatjeAchtergrondBeginEindUitleg = loadImage('Afbeeldingen/plaatjeAchtergrondWit.jpg'); // achtergrondplaatje laden
+  plaatjeAchtergrondBeginUitlegEind = loadImage('Afbeeldingen/plaatjeAchtergrondWit.jpg'); // achtergrondplaatje laden
 }
 
-function setup() {
+function setup() { 
   createCanvas(1080, 720); // afmetingen van de game
   setInterval(updateTimer, 1000); // elke 1000 ms gaat de teller van de secondes 1 omhoog
-  doelwitBalletjeErbij();
+  doelwitBalletjeErbij(); // laat een nieuw doelwit spawnen
 }
 
 function draw() {
-  switch (spelStatus) {
+  switch (spelStatus) { // is voor het wisselen tussen het beginscherm, de uitleg, de game en het eindscherm
     case BEGINSCHERM:
-      image(plaatjeAchtergrondBeginEindUitleg, 0, 0);
-      titelKnopEnNamenBeginScherm();
-      tekstenZijkantenBeginscherm();
-      bedieningBeginscherm();
+      image(plaatjeAchtergrondBeginUitlegEind, 0, 0);
+      titelKnopEnNamenBeginScherm(); // tekent de titel, de knop en namen op het beginscherm
+      tekstenZijkantenBeginscherm(); // tekent de teksten aan de zijkanten van het beginscherm
+      knopUitlegBeginscherm(); // tekent de knop van de uitleg op het beginscherm
+      bedieningBeginscherm(); // tekent de bediening op het beginscherm
 
       break;
     case UITLEG:
@@ -401,7 +433,7 @@ function draw() {
 
       tekenTimer(); // tekent de timer
 
-      tekenRondeFaseTekst();
+      tekenRondeFaseTekst(); // tekent de tekst van de Ronde en van de Fase in de game
 
       if(checkGameOver() === true) {
         spelStatus = GAMEOVER; // als het balletje bij de onderkant van het scherm komt is "Game Over = true"; dan is de spelstatus GAMEOVER
@@ -410,33 +442,34 @@ function draw() {
       break;
 
     case GAMEOVER:
-      image(plaatjeAchtergrondBeginEindUitleg, 0, 0);
-      eindSchermTitel();
-      scores();
-      knopEindschermLinks();
-      knopEindschermRechts();
+      image(plaatjeAchtergrondBeginUitlegEind, 0, 0);
+      eindSchermTitel(); // tekent de titel van het eindscherm
+      scores(); // tekent de behaalde scores op het eindscherm
+      knopEindschermLinks(); // tekent de linkerknop op het eindscherm
+      knopEindschermRechts(); // tekent de rechterknop op het eindscherm
       break;
   }
 
 }
 function keyPressed() { // spatiebalk ingedrukt -> balletje komt uit schieter
     if(keyCode === 32) { // 32 = spatiebalk
-        balletjesSchieter.push([schieterX + 40, 662]);
+      balletjesSchieter.push([schieterX + 40, 662]); // stopt een nieuw balletje van de schieter in de array
     }
 }
 
-function mousePressed() {
-  if(spelStatus === GAMEOVER) {
-    if(mouseX > posXknoppenEindscherm + 7 && mouseX < posXknoppenEindscherm + 347 && mouseY > posYknoppenEindscherm + 6 && mouseY < posYknoppenEindscherm + 78) { //
-      spelStatus = BEGINSCHERM; // spelStatus = BEGINSCHERM als je op de linkerknop klikt
-      resetGame();
-    } else if(mouseX > posXknoppenEindscherm + 7 + afstandTussenKnoppenEindscherm && mouseX < posXknoppenEindscherm + 347 + afstandTussenKnoppenEindscherm && mouseY > posYknoppenEindscherm + 6 && mouseY < posYknoppenEindscherm + 78) { //
-      spelStatus = SPELEN; // spelStatus = SPELEN als je op de rechterknop klikt
-      resetGame();
+function mousePressed() { // als de muis ingedrukt wordt
+  if(spelStatus === GAMEOVER) { // als de spelStatus "GAMEOVER" is
+    if(mouseX > posXknoppenEindscherm + 7 && mouseX < posXknoppenEindscherm + 347 && mouseY > posYknoppenEindscherm + 6 && mouseY < posYknoppenEindscherm + 78) { // als er op de linkerknop gedrukt wordt
+      spelStatus = BEGINSCHERM; // spelStatus = BEGINSCHERM als je op de linkerknop op het eindscherm klikt
+      resetGame(); // reset de game  
+    } else if(mouseX > posXknoppenEindscherm + 7 + afstandTussenKnoppenEindscherm && mouseX < posXknoppenEindscherm + 347 + afstandTussenKnoppenEindscherm && mouseY > posYknoppenEindscherm + 6 && mouseY < posYknoppenEindscherm + 78) { // als er op de rechterknop gedrukt wordt
+      spelStatus = SPELEN; // spelStatus = SPELEN als je op de rechterknop op het eindschermklikt
+      resetGame(); // reset de game
     }
-  } else if(spelStatus === BEGINSCHERM) {
-    if(mouseX > posXrechthoekBeginscherm && mouseX < posXrechthoekBeginscherm + 344 && mouseY > posYrechthoekBeginscherm && mouseY < posYrechthoekBeginscherm + 74) { // check of de knop "Game Spelen" wordt geklikt
-      spelStatus = SPELEN; // spelStatus = SPELEN als je op de knop klikt
+    } else if(spelStatus === BEGINSCHERM) { // als de spelStatus "BEGINSCHERM" is
+      if(mouseX > posXrechthoekBeginscherm && mouseX < posXrechthoekBeginscherm + 344 && mouseY > posYrechthoekBeginscherm && mouseY < posYrechthoekBeginscherm + 74) { // als er op de knop van het beginscherm wordt geklikt
+        spelStatus = SPELEN; // spelStatus = SPELEN als je op de knop klikt
     }
-  }
-}
+    //} else if
+    }
+}    
