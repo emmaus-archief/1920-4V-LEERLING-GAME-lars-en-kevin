@@ -6,33 +6,33 @@ const GAMEOVER = 3;
 var spelStatus = BEGINSCHERM;
 
 // constanten van het beginscherm
-const posXrechthoekBeginscherm = 362;
-const posYrechthoekBeginscherm = 246;
-const posXbedieningBeginscherm = 382;
-const posYbedieningBeginscherm = 448;
-const posXtekstZijkantBeginscherm = 60; // X-positie
-const posYtekstZijkantBeginscherm = 300;
+const posXrechthoekBeginscherm = 362; // X-positie van de rechthoek met de tekst "Game Spelen"
+const posYrechthoekBeginscherm = 246; // Y-positie van de rechthoek met de tekst "Game Spelen"
+const posXbedieningBeginscherm = 382; // X-positie van de bediening op het beginscherm
+const posYbedieningBeginscherm = 448; // Y-positie van de bediening op het beginscherm
+const posXtekstZijkantBeginscherm = 60; // X-positie van de tekst aan de zijkant van het beginscherm
+const posYtekstZijkantBeginscherm = 300; // Y-positie van de tekst aan de zijkant van het beginscherm
 
 // array's van kogeltjes en doelwitten
-var balletjesSchieter = []; // balletjes van schiet
-var doelwitRondje = []; // rondjes van doelwitten
+var balletjesSchieter = []; // maakt een array aan voor de balletjes van de schieter
+var doelwitRondje = []; // maakt een array aan voor de doelwitten
 
 // timer
 var timerSec = 0; // timer secondes begint op 0
 var timerMin = 0; // timer minuten begint op 0
 var totaalSec = 0; // totaal aantal secondes, wordt niet gereset na een minuut
-var timerMinStr = "";
-var timerSecStr = "";
+var timerMinStr = ""; // maakt een lege string aan voor de minuten, die later in de code gevuld wordt
+var timerSecStr = ""; // maakt een lege string aan voor de secondes, die later in de code gevuld wordt
 
 // schieter
 var schieterX = 518; // startpositie schieter
 var schieterY = 672; // Y-positie schieter
 
 // fases in de game
-var fase = 1;
-var faseNummer = 0;
-var faseTekst = "";
-var rondeTekst = "";
+var fase = 1; // de game begint met fase = 1
+var faseNummer; // maakt een globale variabele aan voor "faseNummer"
+var rondeTekst = ""; // maakt een lege string aan voor de rondeTekst; deze wordt later gevuld in de code
+var faseTekst = ""; // maakt een lege string aan voor de faseTekst; deze wordt later gevuld in de code
 
 // doelwitsnelheid begin
 var doelwitSnelheid = 1; // hoe snel de doelwit balletjes vallen aan het begin
@@ -42,27 +42,26 @@ const balSchieterDiameter = 16; // diameter van het balletje van de schieter
 const balDoelwitDiameter = 26; // diameter van het doelwit balletje
 
 // layout game (tekst grootte, etc.)
-const tekstGrootteTekstGame = 36; // grootte van de tekst in de game
+const tekstGrootteTekstGame = 36; // grootte  van de tekst in de game
 const hoogteTekstGame = 40; // hoogte van de tekst in de game
 
 // constanten van het eindscherm
-const posXtekstEindeScherm = 460;
-const posYtekstEindeScherm = 268;
-const posXknoppenEindscherm = 142;
-const posYknoppenEindscherm = 490;
-const afstandTussenKnoppenEindscherm = 440;
+const posXtekstEindeScherm = 460; // X-positie van de behaalde scores op het eindscherm
+const posYtekstEindeScherm = 268; // Y-positie van de behaalde scores op het eindscherm
+const posXknoppenEindscherm = 142; // X-positie van de knoppen op het eindscherm
+const posYknoppenEindscherm = 490; // Y-positie van de knoppen op het eindscherm 
+const afstandTussenKnoppenEindscherm = 440; // de afstand tussen de knoppen op het eindscherm
 
 // VARIABELES MET FUNCTIES VAN HET BEGINSCHERM
 
-var titelKnopEnNamenBeginScherm = function() {
+var titelKnopEnNamenBeginScherm = function() { // variabele voor het tekenen van de titel, de knop en de namen
 
   fill(222, 6, 42);
-  textFont('Georgia');
+  textFont('Georgia'); // lettertype
   textSize(120);
   stroke(0);
   strokeWeight(4);
   text("Shooter!", 314, 132); // tekst titel
-
 
   if (mouseX > posXrechthoekBeginscherm && mouseX < posXrechthoekBeginscherm + 344 && mouseY > posYrechthoekBeginscherm && mouseY < posYrechthoekBeginscherm + 74) {
     fill(114, 212, 252);
@@ -75,7 +74,7 @@ var titelKnopEnNamenBeginScherm = function() {
   stroke(0);
   rect(posXrechthoekBeginscherm, posYrechthoekBeginscherm, 344, 74); // rechthoek beginscherm
 
-  textFont('Helvetica');
+  textFont('Helvetica'); // lettertype
   textSize(30);
   if (mouseX > posXrechthoekBeginscherm && mouseX < posXrechthoekBeginscherm + 344 && mouseY > posYrechthoekBeginscherm && mouseY < posYrechthoekBeginscherm + 74) {
     fill(255);
@@ -86,7 +85,6 @@ var titelKnopEnNamenBeginScherm = function() {
     fill(100);
   }
   text("Game Spelen", posXrechthoekBeginscherm + 78, posYrechthoekBeginscherm + 46); // tekst "Game Spelen"
-
 
   fill(200);
   textFont('Helvetica'); // lettertype
@@ -136,7 +134,7 @@ var tekenSchieter = function() { // variabele voor het tekenen van de schieter
 var tekenBalletjeSchieter = function(balSchieterX, balSchieterY) { // variabele voor het tekenen van het balletje van de schieter
   strokeWeight(2);
   fill(100);
-  ellipse(balSchieterX, balSchieterY, balSchieterDiameter); // afmetingen balletje van de schieter
+  ellipse(balSchieterX, balSchieterY, balSchieterDiameter); // plaats en afmetingen van het balletje van de schieter
 }
 
 var doelwitBalletjeErbij = function() { // variabele, zodat er een nieuw doelwit verschijnt
@@ -156,7 +154,7 @@ var doelwitBalletjeErbij = function() { // variabele, zodat er een nieuw doelwit
   if(fase === 0) {
     doelwitSnelheid = 1; // de bovenstaande code werkt niet voor 0 (dan wordt de snelheid 0.5 en het moet 1 zijn)
   }
-  if(spelStatus === SPELEN) {
+  if(spelStatus === SPELEN) { // alleen een nieuw balletje in de array als je de game aan het spelen bent
     doelwitRondje.push([random(30, width - 30), 20, doelwitSnelheid]); // stopt een nieuw doelwit in de array
   }
 }
@@ -164,10 +162,10 @@ var doelwitBalletjeErbij = function() { // variabele, zodat er een nieuw doelwit
 var tekenRondjeDoelwit = function(rondjeDoelwitX, rondjeDoelwitY) { // variabele van het doelwit tekenen
   fill(255, 255 - rondjeDoelwitY / 2.8235, 0); // kleur doelwit rondje
   strokeWeight(2);
-  ellipse(rondjeDoelwitX, rondjeDoelwitY, balDoelwitDiameter); // doelwit rondje
+  ellipse(rondjeDoelwitX, rondjeDoelwitY, balDoelwitDiameter); // plaats en afmetingen van het doelwit
 }
 
-var doelwittenEnKogelsVerdwijnen = function() { // variabale van het verdwijnen van doelwitten en/of kogels als dat moet
+var doelwittenEnKogelsVerdwijnen = function() { // variabele van het verdwijnen van doelwitten en/of kogels als dat moet
   var teVerwijderenSchieter; // de plaats in de array van het balletje van de schieter dat verwijderd moet worden
   var teVerwijderenDoelwit; // de plaats in de array van het doelwit dat verwijderd moet worden
   var teVerwijderenSchieterBoven; // de plaats in de array van het balletje van de schieter dat verwijderd moet worden
@@ -188,57 +186,57 @@ var doelwittenEnKogelsVerdwijnen = function() { // variabale van het verdwijnen 
   })
 
   if(teVerwijderenSchieter !== undefined) { // als er een balletje is dat verwijderd moet worden; !== betekent is niet gelijk aan
-    balletjesSchieter.splice(teVerwijderenSchieter, 1); // verwijder het schieter balletje
+    balletjesSchieter.splice(teVerwijderenSchieter, 1); // verwijder het desbetreffende schieter balletje uit de array
   }
   if(teVerwijderenDoelwit !== undefined) { // als er een balletje is dat verwijderd moet worden; !== betekent is niet gelijk aan
-    doelwitRondje.splice(teVerwijderenDoelwit, 1); // verwijder het doelwit
+    doelwitRondje.splice(teVerwijderenDoelwit, 1); // verwijder het desbetreffende doelwit uit de array
   }
   if(teVerwijderenSchieterBoven !== undefined) { // als er een balletje is dat verwijderd moet worden; !== betekent is niet gelijk aan
-    balletjesSchieter.splice(teVerwijderenSchieterBoven, 1); // verwijder het schieter balletje
+    balletjesSchieter.splice(teVerwijderenSchieterBoven, 1); // verwijder het desbetreffende schieter balletje uit de array
   }
 }
 
-var tekenRondeFaseTekst = function() {
+var tekenRondeFaseTekst = function() { // variabele voor het tekenen van de rondeTekst en de faseTekst
 
-  if(faseNummer === 1) {
-    faseTekst = "1";
-  } else if(faseNummer === 2) {
-    faseTekst = "2";
-  } else if(faseNummer === 0) {
-    faseTekst = "3";
+  if(faseNummer === 1) { // als faseNummer 1 is
+    faseTekst = "1"; // de faseTekst wordt 1
+  } else if(faseNummer === 2) { // als faseNummer 2 is
+    faseTekst = "2"; // de faseTekst wordt 2
+  } else if(faseNummer === 0) { // als faseNummer 3 is
+    faseTekst = "3"; // de faseTekst wordt 
   }
 
-  rondeTekst = Math.floor(totaalSec / 60) + 1;
+  rondeTekst = Math.floor(totaalSec / 60) + 1; // vult de lege variabele "rondeTekst"
 
   push(); // werkt samen met pop, zodat alle tekstattributes niet voor de hele code gelden
   fill(255);
   textSize(tekstGrootteTekstGame);
   strokeWeight(2);
-  text("Ronde: " + rondeTekst + " Fase: " + faseTekst, 14, hoogteTekstGame);
+  text("Ronde: " + rondeTekst + " Fase: " + faseTekst, 14, hoogteTekstGame); // tekst van de ronde en van de tekst in de game
   pop(); // werkt samen met push, zodat alle tekstattributes niet voor de hele code gelden
 }
 
-var updateTimer = function() {
-  if(spelStatus === SPELEN) {
+var updateTimer = function() { // variabele om de timer te updaten
+  if(spelStatus === SPELEN) { // doet dit alleen als de SpelStatus "SPELEN" is
     timerSec++; // elke seconde de teller van de secondes 1 omhoog
     totaalSec++; // elke seconde gaat de totale hoeveelheid secondes met 1 omhoog
 
-    if (timerSec === 60) {
+    if (timerSec === 60) { // dit gebeurt alleen als de aantal seconden in de timer op "60" staat
       timerMin++; // als 60 secondes voorbij zijn, dan 1 minuut erbij
       timerSec = 0; // als 60 secondes voorbij zijn, dan secondes naar 0
     }
   }
 }
 
-var tekenTimer = function() {
-  timerMinStr = timerMin + "";
-  if(timerMinStr.length < 2) {
-    timerMinStr = "0" + timerMinStr;
+var tekenTimer = function() { // variabele om de timer te tekenen
+  timerMinStr = timerMin + ""; // de string van de timer minuten is het aantal minuten in de timer + een lege string
+  if(timerMinStr.length < 2) { // voert dit alleen uit als er minder dan 2 getallen in de timer staan
+    timerMinStr = "0" + timerMinStr; // de string van de timer minuten bestaat nu uit een "0" en de timerMin 
   }
 
-  timerSecStr = timerSec + "";
-  if(timerSecStr.length < 2) {
-    timerSecStr = "0" + timerSecStr;
+  timerSecStr = timerSec + ""; // de string van de timer seconden is het aantalseconden in de timer + een lege string
+  if(timerSecStr.length < 2) { // voert dit alleen uit als er minder dan 2 getallen in de timer staan
+    timerSecStr = "0" + timerSecStr; // de string van de timer seconden bestaat nu uit een "0" en de timerSec 
   }
     
   var timerTekst = timerMinStr + ":" + timerSecStr; // dit staat mooier dan in de string van text()
@@ -247,35 +245,35 @@ var tekenTimer = function() {
   stroke(0);
   strokeWeight(2);
   textSize(tekstGrootteTekstGame);
-  text(timerTekst, 976, hoogteTekstGame); // de timer tekst
+  text(timerTekst, 976, hoogteTekstGame); // de timer tekst in de game
 }
 
-var checkGameOver = function() {
-  var gameOver = false;
-  doelwitRondje.forEach(function(doelwit) {
-    doelwitY = doelwit[1];
+var checkGameOver = function() { // variabele om te checken of het doelwit de grond heeft geraakt
+  var gameOver = false; // variabele gameOver staat op "false"
+  doelwitRondje.forEach(function(doelwit) { // geld voor elk "doelwit"
+    doelwitY = doelwit[1]; // doelwitY is de 2e plaats in de array, is de Y-positie van het doelwit
     if(doelwitY > 720 - balDoelwitDiameter / 2) { // check of het doelwit de onderkant raakt
-      gameOver = true;
+      gameOver = true; // variabele gameOver wordt op "true" gezet
     }
   })
-  return gameOver;
+  return gameOver; // zet checkGameOver op "true" of "false"
 }
 
 var resetGame = function() {
   timerSec = 0; // timer secondes begint weer op 0
   timerMin = 0; // timer minuten begint weer op 0
   totaalSec = 0; // timer totaal begint weer op 0
-  schieterX = 518;
-  balletjesSchieter = [];
-  doelwitRondje = [];
-  fase = 1;
-  faseNummer = 1;
-  doelwitSnelheid = 1;
+  schieterX = 518; // zet de schieter terug op zijn beginplek
+  balletjesSchieter = []; // maakt de array van de balletjes van de schieter weer leeg
+  doelwitRondje = []; // maakt de array van de doelwitten leeg, zodat er balletjes over het hele scherm zitten als je de game opnieuw speelt
+  fase = 1; // zet de fase op 1
+  faseNummer = 1; // zet faseNummer op 1
+  doelwitSnelheid = 1; // zet de snelheid van de doelwitten weer op 1
 }
 
 // VARIABELES MET FUNCTIES VAN EINDSCHERM
 
-var eindSchermTitel = function() {
+var eindSchermTitel = function() { // variabele voor het tekenen van de titel van het eindscherm
   fill(222, 6, 42);
   textFont('Georgia');
   textSize(120);
@@ -284,23 +282,23 @@ var eindSchermTitel = function() {
   text("Game Over!", 226, 132); // tekst titel
 }
 
-var scores = function() {
+var scores = function() { // variabele voor het teken van de behaalde scores
 
-  rondeTekst = Math.floor(totaalSec / 60) + 1;  
+  rondeTekst = Math.floor(totaalSec / 60) + 1; // bepaalt de ronde waarin je zit
 
   fill(255);
-  textFont('Helvetica');
+  textFont('Helvetica'); // lettertype
   textSize(24);
   stroke(0);
   strokeWeight(4);
-  text("Behaald: ", posXtekstEindeScherm - 120, posYtekstEindeScherm)
-  text("- Ronde: " + rondeTekst, posXtekstEindeScherm, posYtekstEindeScherm);
-  text("- Fase: " + faseTekst, posXtekstEindeScherm, posYtekstEindeScherm + 50);
-  text("- Tijd: " + timerMinStr + ":" + timerSecStr + " minuten", posXtekstEindeScherm, posYtekstEindeScherm + 100);
+  text("Behaald: ", posXtekstEindeScherm - 120, posYtekstEindeScherm) // tekst "Behaald:"
+  text("- Ronde: " + rondeTekst, posXtekstEindeScherm, posYtekstEindeScherm); // tekst "Ronde"
+  text("- Fase: " + faseTekst, posXtekstEindeScherm, posYtekstEindeScherm + 50); // tekst "Fase"
+  text("- Tijd: " + timerMinStr + ":" + timerSecStr + " minuten", posXtekstEindeScherm, posYtekstEindeScherm + 100); // "Tijd"
 }
 
-var knopEindschermLinks = function() {
-  if (mouseX > posXknoppenEindscherm + 7 && mouseX < posXknoppenEindscherm + 347 && mouseY > posYknoppenEindscherm + 6 && mouseY < posYknoppenEindscherm + 78) {
+var knopEindschermLinks = function() { // variabele voor het tekenen van de linker eindknop
+  if (mouseX > posXknoppenEindscherm + 7 && mouseX < posXknoppenEindscherm + 347 && mouseY > posYknoppenEindscherm + 6 && mouseY < posYknoppenEindscherm + 78) { // als de muis op de linkerknop is
     fill(114, 212, 252);
     strokeWeight(8);
   } else {
@@ -308,12 +306,12 @@ var knopEindschermLinks = function() {
     strokeWeight(6);
   }
   stroke(0);
-  rect(posXknoppenEindscherm + 6, posYknoppenEindscherm + 6, 344, 74); // achtergrond rechthoek
+  rect(posXknoppenEindscherm + 6, posYknoppenEindscherm + 6, 344, 74); // achtergrond rechthoek van de linkerknop
 
   fill(100);
   textFont('Helvetica'); // lettertype
   textSize(30);
-  if (mouseX > posXknoppenEindscherm + 7 && mouseX < posXknoppenEindscherm + 347 && mouseY > posYknoppenEindscherm + 6 && mouseY < posYknoppenEindscherm + 78) {
+  if (mouseX > posXknoppenEindscherm + 7 && mouseX < posXknoppenEindscherm + 347 && mouseY > posYknoppenEindscherm + 6 && mouseY < posYknoppenEindscherm + 78) { // als de muis op de linkerknop is
     strokeWeight(4);
     fill(255);
   } else {
@@ -322,8 +320,8 @@ var knopEindschermLinks = function() {
   text("Naar beginscherm", posXknoppenEindscherm + 56, posYknoppenEindscherm + 52); // tekst "Naar Beginscherm"
 }
 
-var knopEindschermRechts = function() {
-  if (mouseX > posXknoppenEindscherm + 7 + afstandTussenKnoppenEindscherm && mouseX < posXknoppenEindscherm + 347 + afstandTussenKnoppenEindscherm && mouseY > posYknoppenEindscherm + 6 && mouseY < posYknoppenEindscherm + 78) {
+var knopEindschermRechts = function() { // variabele voor het tekenen van de rechter eindknop
+  if (mouseX > posXknoppenEindscherm + 7 + afstandTussenKnoppenEindscherm && mouseX < posXknoppenEindscherm + 347 + afstandTussenKnoppenEindscherm && mouseY > posYknoppenEindscherm + 6 && mouseY < posYknoppenEindscherm + 78) { // als de muis op de rechterknop is
     fill(114, 212, 252);
     strokeWeight(8);
   } else {
@@ -331,12 +329,12 @@ var knopEindschermRechts = function() {
     strokeWeight(6);
   }
   stroke(0);
-  rect(posXknoppenEindscherm + 6 + afstandTussenKnoppenEindscherm, posYknoppenEindscherm + 6, 344, 74); // achtergrond rechthoek
+  rect(posXknoppenEindscherm + 6 + afstandTussenKnoppenEindscherm, posYknoppenEindscherm + 6, 344, 74); // achtergrond rechthoek van de rechterknop
 
   fill(100);
   textFont('Helvetica'); // lettertype
   textSize(30);
-  if (mouseX > posXknoppenEindscherm + 7 + afstandTussenKnoppenEindscherm && mouseX < posXknoppenEindscherm + 347 + afstandTussenKnoppenEindscherm && mouseY > posYknoppenEindscherm + 6 && mouseY < posYknoppenEindscherm + 78) {
+  if (mouseX > posXknoppenEindscherm + 7 + afstandTussenKnoppenEindscherm && mouseX < posXknoppenEindscherm + 347 + afstandTussenKnoppenEindscherm && mouseY > posYknoppenEindscherm + 6 && mouseY < posYknoppenEindscherm + 78) { // als de muis op de rechterknop is
     strokeWeight(4);
     fill(255);
   } else {
@@ -345,12 +343,13 @@ var knopEindschermRechts = function() {
   text("Opnieuw spelen", posXknoppenEindscherm + 72 + afstandTussenKnoppenEindscherm, posYknoppenEindscherm + 52); // tekst "Opnieuw spelen"
 }
 
+
 // BEGIN VAN DE FUNCTIES
 
 
-var plaatjeAchtergrondGame;
-var plaatjeAchtergrondBeginEindUitleg;
-function preload() {
+////var plaatjeAchtergrondGame; // maakt een varia
+//var plaatjeAchtergrondBeginEindUitleg; // 
+function preload() { // functie om de plaatjes te laden
   pijlLinks = loadImage('Afbeeldingen/pijlLinks.jpg'); // plaatje linker pijltje laden
   pijlRechts = loadImage('Afbeeldingen/pijlRechts.jpg'); // plaatje rechter pijltje laden
   spatiebalk = loadImage('Afbeeldingen/spatiebalk.jpg'); // plaatje spatiebalk laden
