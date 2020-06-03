@@ -19,14 +19,14 @@ const posYbedieningBeginscherm = 448; // Y-positie van de bediening op het begin
 
 // constanten van de uitleg
 
-const posXtitelUitleg = 436;
-const posYtitelUitleg = 88;
-const posXtekstUitleg = 32;
-const posYtekstUitleg = 180;
-const posXknopInUitleg = 760;
-const posYknopInUitleg = 580;
-const breedteKnopInUitleg = 230;
-const hoogteKnopInUitleg = 60;
+const posXtitelUitleg = 436; // X-positie van de titel van de uitleg
+const posYtitelUitleg = 88; // Y-positie van de titel van de uitleg
+const posXtekstUitleg = 32; // X-positie van de tekst van de uitleg
+const posYtekstUitleg = 180; // Y-positie van de tekst van de uitleg
+const posXknopInUitleg = 760; // X-positie van de knop in de uitleg
+const posYknopInUitleg = 580; // Y-positie van de knop in de uitleg
+const breedteKnopInUitleg = 230; // breedte van de knop in de uitleg
+const hoogteKnopInUitleg = 60; // hoogte van de knop in de uitleg
 
 // array's van kogeltjes en doelwitten
 var balletjesSchieter = []; // maakt een array aan voor de balletjes van de schieter
