@@ -67,7 +67,7 @@ const posXknoppenEindscherm = 142; // X-positie van de knoppen op het eindscherm
 const posYknoppenEindscherm = 490; // Y-positie van de knoppen op het eindscherm 
 const afstandTussenKnoppenEindscherm = 440; // de afstand tussen de knoppen op het eindscherm
 
-// VARIABELES MET FUNCTIES VAN HET BEGINSCHERM
+// VARIABELEN MET FUNCTIES VAN HET BEGINSCHERM
 
 var titelKnopEnNamenBeginScherm = function() { // variabele voor het tekenen van de titel, de knop en de namen
 
@@ -155,13 +155,13 @@ var bedieningBeginscherm = function() {
   text("schiet een kogel", posXbedieningBeginscherm + 16, posYbedieningBeginscherm + 100); // tekst spatiebalk
 }
 
-// VARIABELES MET FUNCTIES VAN DE UITLEG
+// VARIABELEN MET FUNCTIES VAN DE UITLEG
 
-var tekenUitlegAchtergrond = function() {
+var tekenUitlegAchtergrond = function() { // variabele voor het tekenen van de achtergrond van de uitleg
   image(plaatjeAchtergrondBeginUitlegEind, 0, 0);
 }
 
-var tekenTitelUitleg = function() {
+var tekenTitelUitleg = function() { // variabele voor het tekenen van de titel
   fill(240, 0, 0);
   textSize(80);
   stroke(0);
@@ -169,46 +169,46 @@ var tekenTitelUitleg = function() {
   text("Uitleg", posXtitelUitleg, posYtitelUitleg);
 }
 
-var tekstAttributesKoppenUitleg = function() {
+var tekstAttributesKoppenUitleg = function() { // variabele voor de tekstattributes van de koppen
   fill(255);
   textSize(26);
   stroke(0);
   strokeWeight(5);  
 }
 
-var tekstAttributesTekstUitleg = function() {
+var tekstAttributesTekstUitleg = function() { // variabele voor de tekstattributes van de kleine tekst
   fill(255);
   textSize(20);
   stroke(0);
   strokeWeight(3);  
 }
 
-var tekenUitlegTekstDoel = function() {
-  tekstAttributesKoppenUitleg();
-  text("Doel van het spel:", posXtekstUitleg, posYtekstUitleg);
+var tekenUitlegTekstDoel = function() { // variabele voor het tekenen van de tekst van het doel van de game 
+  tekstAttributesKoppenUitleg(); // zet de tekst attributes in de code voor de koppen van de tekst
+  text("Doel van het spel:", posXtekstUitleg, posYtekstUitleg);  // tekent de tekst "Doel van het spel"
 
-  tekstAttributesTekstUitleg();
-  text("Zorg dat de doelwitten (balletjes) de grond niet raken\n door de doelwitten uit de lucht te schieten.\nMet de schieter vuur je kogels af.\nAls de kogel en het doelwit elkaar raken,\n verdwijnen zowel de kogel als het doelwit.", posXtekstUitleg, posYtekstUitleg + 50);  
+  tekstAttributesTekstUitleg(); // zet de tekst attributes in de code voor de kleine tekst
+  text("Zorg dat de doelwitten (balletjes) de grond niet raken\n door de doelwitten uit de lucht te schieten.\nMet de schieter vuur je kogels af.\nAls de kogel en het doelwit elkaar raken,\n verdwijnen zowel de kogel als het doelwit.", posXtekstUitleg, posYtekstUitleg + 50);  // tekent de kleine tekst van het doel van het spel 
 }
 
-var tekenUitlegTekstFaseRonde = function() {
-  tekstAttributesKoppenUitleg();
-  text("Rondes en Fases:", posXtekstUitleg, posYtekstUitleg + 220);
+var tekenUitlegTekstFaseRonde = function() { // variabele voor het tekenen van de tekst van de rondes en de fases
+  tekstAttributesKoppenUitleg(); // zet de tekst attributes in de code voor de koppen van de tekst
+  text("Rondes en Fases:", posXtekstUitleg, posYtekstUitleg + 220);  // tekent de tekst "Rondes en Fases"
 
-  tekstAttributesTekstUitleg();
-  text("Elke minuut dat je overleeft kom je een ronde verder.\nElke ronde gaat de snelheid waarmee de balletjes vallen omhoog\n elke ronde vallen de balletjes dus sneller.\nElke ronde bestaat uit 3 fases van 20 seconden, die elke ronde opnieuw afspelen.\nHoe hoger de fase hoe kleiner het interval tussen de doelwitten.\nAan het begin van elke ronde is het interval groot,\n naarmate je verder in de ronde komt, wordt het interval steeds kleiner.", posXtekstUitleg, posYtekstUitleg + 270);  
+  tekstAttributesTekstUitleg(); // zet de tekst attributes in de code voor de kleine tekst
+  text("Elke minuut dat je overleeft kom je een ronde verder.\nElke ronde gaat de snelheid waarmee de balletjes vallen omhoog\n elke ronde vallen de balletjes dus sneller.\nElke ronde bestaat uit 3 fases van 20 seconden, die elke ronde opnieuw afspelen.\nHoe hoger de fase hoe kleiner het interval tussen de doelwitten.\nAan het begin van elke ronde is het interval groot,\n naarmate je verder in de ronde komt, wordt het interval steeds kleiner.", posXtekstUitleg, posYtekstUitleg + 270); // tekent de kleine tekst van de rondes en de fases 
 }
 
-var tekenUitlegTekstBediening = function() {
-  tekstAttributesKoppenUitleg();
-  text("Bediening:", posXtekstUitleg + 580, posYtekstUitleg);
+var tekenUitlegTekstBediening = function() { // variabele voor het tekenen van de tekst van de bediening
+  tekstAttributesKoppenUitleg(); // zet de tekst attributes in de code voor de koppen van de tekst
+  text("Bediening:", posXtekstUitleg + 580, posYtekstUitleg); // tekent de tekst "Bediening"
 
-  tekstAttributesTekstUitleg();
-  text("Druk op het pijltje naar links op het toetsenbord\n om de schieter naar links te bewegen.\nDruk op het pijltje naar rechts op het toetsenbord\n om de schieter naar rechts te bewegen.\nDruk op de spatiebalk om een kogel te schieten.", posXtekstUitleg + 580, posYtekstUitleg + 50);
+  tekstAttributesTekstUitleg(); // zet de tekst attributes in de code voor de kleine tekst
+  text("Druk op het pijltje naar links op het toetsenbord\n om de schieter naar links te bewegen.\nDruk op het pijltje naar rechts op het toetsenbord\n om de schieter naar rechts te bewegen.\nDruk op de spatiebalk om een kogel te schieten.", posXtekstUitleg + 580, posYtekstUitleg + 50);  // tekent de kleine tekst van de bediening
 }
 
-var tekenKnopInUitleg = function() {
-  if (mouseX > posXknopInUitleg && mouseX < posXknopInUitleg + breedteKnopInUitleg && mouseY > posYknopInUitleg && mouseY < posYknopInUitleg + hoogteKnopInUitleg) {
+var tekenKnopInUitleg = function() { // variabele voor het tekenen van de knop in het uitleg scherm
+  if (mouseX > posXknopInUitleg && mouseX < posXknopInUitleg + breedteKnopInUitleg && mouseY > posYknopInUitleg && mouseY < posYknopInUitleg + hoogteKnopInUitleg) { // als de muis op de knop is
     fill(114, 212, 252);
     strokeWeight(8);
   } else {
@@ -220,7 +220,7 @@ var tekenKnopInUitleg = function() {
 
   textFont('Helvetica'); // lettertype
   textSize(22);
-  if (mouseX > posXknopInUitleg && mouseX < posXknopInUitleg + breedteKnopInUitleg && mouseY > posYknopInUitleg && mouseY < posYknopInUitleg + hoogteKnopInUitleg) {
+  if (mouseX > posXknopInUitleg && mouseX < posXknopInUitleg + breedteKnopInUitleg && mouseY > posYknopInUitleg && mouseY < posYknopInUitleg + hoogteKnopInUitleg) { // als de muis op de knop is
     fill(255);
     stroke(0);
     strokeWeight(4);
@@ -231,8 +231,7 @@ var tekenKnopInUitleg = function() {
   text("Naar Beginscherm", posXknopInUitleg + 24, posYknopInUitleg + 36); // tekst "Naar beginscherm"
 }
 
-
-// VARIABELES MET FUNCTIES VAN DE GAME
+// VARIABELEN MET FUNCTIES VAN DE GAME
 
 var tekenSchieter = function() { // variabele voor het tekenen van de schieter
   fill(0, 153, 255);
@@ -382,7 +381,7 @@ var resetGame = function() {
   doelwitSnelheid = 1; // zet de snelheid van de doelwitten weer op 1
 }
 
-// VARIABELES MET FUNCTIES VAN EINDSCHERM
+// VARIABELEN MET FUNCTIES VAN EINDSCHERM
 
 var eindSchermTitel = function() { // variabele voor het tekenen van de titel van het eindscherm
   fill(222, 6, 42);
@@ -487,12 +486,12 @@ function draw() {
 
       break;
     case UITLEG:
-      image(plaatjeAchtergrondBeginUitlegEind, 0, 0);
-      tekenTitelUitleg();
-      tekenUitlegTekstDoel();
-      tekenUitlegTekstFaseRonde();
-      tekenUitlegTekstBediening();
-      tekenKnopInUitleg();
+      image(plaatjeAchtergrondBeginUitlegEind, 0, 0); // tekent het achtergrond plaatje van de uitleg
+      tekenTitelUitleg(); // tekent de titel van de uitleg
+      tekenUitlegTekstDoel(); // tekent de tekst met het doel van de game
+      tekenUitlegTekstFaseRonde(); // tekent de tekst met de informatie over de rondes en de fases
+      tekenUitlegTekstBediening(); // tekent de tekst over bediening
+      tekenKnopInUitleg(); // tekent de knop in het uitleg scherm
 
       break;
     case SPELEN:
@@ -526,7 +525,6 @@ function draw() {
       }
 
       break;
-
     case GAMEOVER:
       image(plaatjeAchtergrondBeginUitlegEind, 0, 0);
       eindSchermTitel(); // tekent de titel van het eindscherm
@@ -535,8 +533,8 @@ function draw() {
       knopEindschermRechts(); // tekent de rechterknop op het eindscherm
       break;
   }
-
 }
+
 function keyPressed() { // spatiebalk ingedrukt -> balletje komt uit schieter
     if(keyCode === 32) { // 32 = spatiebalk
       balletjesSchieter.push([schieterX + 40, 662]); // stopt een nieuw balletje van de schieter in de array
