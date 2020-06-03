@@ -17,6 +17,13 @@ const hoogteKnopUitlegBeginscherm = 48; // hoogte van de knop van de uitleg op h
 const posXbedieningBeginscherm = 382; // X-positie van de bediening op het beginscherm
 const posYbedieningBeginscherm = 448; // Y-positie van de bediening op het beginscherm
 
+// constanten van de uitleg
+
+const posXtitelUitleg = 436;
+const posYtitelUitleg = 88;
+const posXtekstUitleg = 32;
+const posYtekstUitleg = 180;
+
 // array's van kogeltjes en doelwitten
 var balletjesSchieter = []; // maakt een array aan voor de balletjes van de schieter
 var doelwitRondje = []; // maakt een array aan voor de doelwitten
@@ -146,8 +153,58 @@ var bedieningBeginscherm = function() {
 
 // VARIABELES MET FUNCTIES VAN DE UITLEG
 
-var tekenUitleg = function() {
+var tekenUitlegAchtergrond = function() {
   image(plaatjeAchtergrondBeginUitlegEind, 0, 0);
+}
+
+var tekenTitelUitleg = function() {
+  fill(240, 0, 0);
+  textSize(80);
+  stroke(0);
+  strokeWeight(6);
+  text("Uitleg", posXtitelUitleg, posYtitelUitleg);
+}
+
+var tekenUitlegTekstDoel = function() {
+  fill(255);
+  textSize(26);
+  stroke(0);
+  strokeWeight(5);
+  text("Doel van het spel:", posXtekstUitleg, posYtekstUitleg);
+
+  fill(255);
+  textSize(20);
+  stroke(0);
+  strokeWeight(3);
+  text("Zorg dat de doelwitten (balletjes) de grond niet raken\n door de doelwitten uit de lucht te schieten.\nMet de schieter vuur je kogels af.\nAls de kogel en het doelwit elkaar raken,\n verdwijnen zowel de kogel als het doelwit.", posXtekstUitleg, posYtekstUitleg + 50);  
+}
+
+var tekenUitlegTekstFaseRonde = function() {
+  fill(255);
+  textSize(26);
+  stroke(0);
+  strokeWeight(5);
+  text("Rondes en Fases:", posXtekstUitleg, posYtekstUitleg + 220);
+
+  fill(255);
+  textSize(20);
+  stroke(0);
+  strokeWeight(3);
+  text("Elke minuut dat je overleeft kom je een ronde verder.\nElke ronde gaat de snelheid waarmee de balletjes vallen omhoog\n elke ronde vallen de balletjes dus sneller.\nElke ronde bestaat uit 3 fases van 20 seconden, die elke ronde opnieuw afspelen.\nHoe hoger de fase hoe kleiner het interval tussen de doelwitten.\nAan het begin van elke ronde is het interval groot,\n naarmate je verder in de ronde komt, wordt het interval steeds kleiner.", posXtekstUitleg, posYtekstUitleg + 270);  
+}
+
+var tekenUitlegTekstBediening = function() {
+  fill(255);
+  textSize(26);
+  stroke(0);
+  strokeWeight(5);
+  text("Bediening:", posXtekstUitleg + 580, posYtekstUitleg);
+
+  fill(255);
+  textSize(20);
+  stroke(0);
+  strokeWeight(3);
+  text("Druk op het pijltje naar links op het toetsenbord\n om de schieter naar links te bewegen.\nDruk op het pijltje naar rechts op het toetsenbord\n om de schieter naar rechts te bewegen.\nDruk op de spatiebalk om een kogel te schieten.", posXtekstUitleg + 580, posYtekstUitleg + 50);
 }
 
 // VARIABELES MET FUNCTIES VAN DE GAME
@@ -391,7 +448,7 @@ function preload() { // functie om de plaatjes te laden
 function setup() { 
   createCanvas(1080, 720); // afmetingen van de game
   setInterval(updateTimer, 1000); // elke 1000 ms gaat de teller van de secondes 1 omhoog
-  doelwitBalletjeErbij(); // laat een nieuw doelwit spawnen
+  doelwitBalletjeErbij(); // laat een nieuw doelwit spawnen; kan niet in de draw, want dan komen er 60 balletjes per seconde
 }
 
 function draw() {
@@ -405,6 +462,11 @@ function draw() {
 
       break;
     case UITLEG:
+      image(plaatjeAchtergrondBeginUitlegEind, 0, 0);
+      tekenTitelUitleg();
+      tekenUitlegTekstDoel();
+      tekenUitlegTekstFaseRonde();
+      tekenUitlegTekstBediening();
 
       break;
     case SPELEN:
@@ -430,9 +492,7 @@ function draw() {
       }
 
       doelwittenEnKogelsVerdwijnen(); // laat doelwit(ten) en/of de kogel(s) verdwijnen als dat moet
-
       tekenTimer(); // tekent de timer
-
       tekenRondeFaseTekst(); // tekent de tekst van de Ronde en van de Fase in de game
 
       if(checkGameOver() === true) {
@@ -466,10 +526,14 @@ function mousePressed() { // als de muis ingedrukt wordt
       spelStatus = SPELEN; // spelStatus = SPELEN als je op de rechterknop op het eindschermklikt
       resetGame(); // reset de game
     }
-    } else if(spelStatus === BEGINSCHERM) { // als de spelStatus "BEGINSCHERM" is
-      if(mouseX > posXrechthoekBeginscherm && mouseX < posXrechthoekBeginscherm + 344 && mouseY > posYrechthoekBeginscherm && mouseY < posYrechthoekBeginscherm + 74) { // als er op de knop van het beginscherm wordt geklikt
-        spelStatus = SPELEN; // spelStatus = SPELEN als je op de knop klikt
-    }
-    //} else if
-    }
-}    
+  }
+
+  if(spelStatus === BEGINSCHERM) { // als de spelStatus "BEGINSCHERM" is
+    if(mouseX > posXrechthoekBeginscherm && mouseX < posXrechthoekBeginscherm + 344 && mouseY > posYrechthoekBeginscherm && mouseY < posYrechthoekBeginscherm + 74) { // als er op de knop van het beginscherm wordt geklikt
+      spelStatus = SPELEN; // spelStatus = SPELEN als je op de knop klikt
+      resetGame();
+    } else if(mouseX > posXknopUitlegBeginscherm && mouseX < posXknopUitlegBeginscherm + breedteKnopUitlegBeginscherm && mouseY > posYknopUitlegBeginscherm && mouseY < posYknopUitlegBeginscherm + hoogteKnopUitlegBeginscherm) {
+      spelStatus = UITLEG; // spelStatus = UITLEG als je op de knop klikt
+    }   
+  }
+}     
