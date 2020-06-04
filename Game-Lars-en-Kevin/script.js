@@ -196,7 +196,7 @@ var tekenUitlegTekstFaseRonde = function() { // variabele voor het tekenen van d
   text("Rondes en Fases:", posXtekstUitleg, posYtekstUitleg + 220);  // tekent de tekst "Rondes en Fases"
 
   tekstAttributesTekstUitleg(); // zet de tekst attributes in de code voor de kleine tekst
-  text("Elke minuut dat je overleeft kom je een ronde verder.\nElke ronde gaat de snelheid waarmee de balletjes vallen omhoog\n elke ronde vallen de balletjes dus sneller.\nElke ronde bestaat uit 3 fases van 20 seconden, die elke ronde opnieuw afspelen.\nHoe hoger de fase hoe kleiner het interval tussen de doelwitten.\nAan het begin van elke ronde is het interval groot,\n naarmate je verder in de ronde komt, wordt het interval steeds kleiner.", posXtekstUitleg, posYtekstUitleg + 270); // tekent de kleine tekst van de rondes en de fases 
+  text("Elke minuut dat je overleeft kom je een ronde verder.\nElke ronde gaat de snelheid waarmee de balletjes vallen omhoog,\n elke ronde vallen de balletjes dus sneller.\nElke ronde bestaat uit 3 fases van 20 seconden, die elke ronde opnieuw afspelen.\nHoe hoger de fase hoe kleiner het interval tussen de doelwitten.\nAan het begin van elke ronde is het interval groot,\n naarmate je verder in de ronde komt, wordt het interval steeds kleiner.", posXtekstUitleg, posYtekstUitleg + 270); // tekent de kleine tekst van de rondes en de fases 
 }
 
 var tekenUitlegTekstBediening = function() { // variabele voor het tekenen van de tekst van de bediening
@@ -270,7 +270,7 @@ var doelwitBalletjeErbij = function() { // variabele, zodat er een nieuw doelwit
 }
 
 var tekenRondjeDoelwit = function(rondjeDoelwitX, rondjeDoelwitY) { // variabele van het doelwit tekenen
-  fill(255, 255 - rondjeDoelwitY / 2.8235, 0); // kleur doelwit rondje
+  fill(255, 255 - rondjeDoelwitY / (720 / 255), 0); // kleur doelwit rondje 2.8235
   strokeWeight(2);
   ellipse(rondjeDoelwitX, rondjeDoelwitY, balDoelwitDiameter); // plaats en afmetingen van het doelwit
 }
