@@ -270,7 +270,7 @@ var doelwitBalletjeErbij = function() { // variabele, zodat er een nieuw doelwit
 }
 
 var tekenRondjeDoelwit = function(rondjeDoelwitX, rondjeDoelwitY) { // variabele van het doelwit tekenen
-  fill(255, 255 - rondjeDoelwitY / (720 / 255), 0); // kleur doelwit rondje 2.8235
+  fill(255, 255 - rondjeDoelwitY / (720 / 255), 0); // kleur doelwit rondje; 720 is de hoogte van de game; 255 is van voluit groen aan het begin.
   strokeWeight(2);
   ellipse(rondjeDoelwitX, rondjeDoelwitY, balDoelwitDiameter); // plaats en afmetingen van het doelwit
 }
